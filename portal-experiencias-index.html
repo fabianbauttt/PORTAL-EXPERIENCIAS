@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prof. Fabián Bautista G. — Escape Rooms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --bg:           #0a0c12;
+      --bg-card:      #111827;
+      --bg-card-alt:  #0f172a;
+      --border:       rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+
+      --text-primary:   #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted:     #475569;
+
+      /* Filosofía — Dorado Descartes */
+      --accent-filo:      #d4c99a;
+      --glow-filo:        rgba(212,201,154,0.18);
+      --glow-filo-ring:   rgba(212,201,154,0.35);
+
+      /* Sociales — Rojo Guerra Fría */
+      --accent-soc:       #c0392b;
+      --glow-soc:         rgba(192,57,43,0.14);
+      --glow-soc-ring:    rgba(192,57,43,0.32);
+
+      /* Arkhé — Bronce Grecia */
+      --accent-arkhe:     #a67c52;
+      --glow-arkhe:       rgba(166,124,82,0.18);
+      --glow-arkhe-ring:  rgba(166,124,82,0.35);
+
+      /* Identidad — Neón Cyberpunk */
+      --accent-cyber:     #00f0ff;
+      --glow-cyber:       rgba(0,240,255,0.18);
+      --glow-cyber-ring:  rgba(0,240,255,0.35);
+
+      /* Filosofía moral — Amatista */
+      --accent-moral:      #b98fd6;
+      --glow-moral:        rgba(185,143,214,0.18);
+      --glow-moral-ring:   rgba(185,143,214,0.34);
+
+      /* Filosofía política — Azul acero */
+      --accent-politica:      #4f83c9;
+      --glow-politica:        rgba(79,131,201,0.18);
+      --glow-politica-ring:   rgba(79,131,201,0.34);
+
+      /* Filosofía del arte — Rosa */
+      --accent-arte:      #d9679a;
+      --glow-arte:        rgba(217,103,154,0.18);
+      --glow-arte-ring:   rgba(217,103,154,0.34);
+
+      /* Metafísica — Índigo */
+      --accent-metafisica:      #5b4fc4;
+      --glow-metafisica:        rgba(91,79,196,0.18);
+      --glow-metafisica-ring:   rgba(91,79,196,0.34);
+
+      /* Epistemología — Esmeralda */
+      --accent-epistemologia:      #3fae8a;
+      --glow-epistemologia:        rgba(63,174,138,0.18);
+      --glow-epistemologia-ring:   rgba(63,174,138,0.34);
+
+      /* Filosofía de la existencia — Ámbar quemado */
+      --accent-existencia:      #d97b3f;
+      --glow-existencia:        rgba(217,123,63,0.18);
+      --glow-existencia-ring:   rgba(217,123,63,0.34);
+
+      --radius:    14px;
+      --transition: 0.38s cubic-bezier(0.22,1,0.36,1);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 55% at 50% 40%, rgba(30,58,138,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 20%, rgba(15,23,42,0.8) 0%, transparent 100%);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1.25rem;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(4rem, 10vh, 7rem) 0 3rem;
+      gap: clamp(3rem, 7vh, 5rem);
+    }
+
+    .header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.9s var(--transition) both;
+    }
+
+    .header-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.08;
+      color: var(--text-primary);
+    }
+
+    .header h1 strong { font-weight: 600; }
+    .header-divider { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); margin: 0.25rem auto; }
+    .header p { font-size: clamp(0.95rem, 2.2vw, 1.1rem); color: var(--text-secondary); font-weight: 300; letter-spacing: 0.01em; font-style: italic; }
+
+    /* ── Cards Grid ─────────────────────────────────────────── */
+    .cards {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── Card ───────────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      animation: fadeUp 0.9s var(--transition) both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.12s; }
+    .card:nth-child(2) { animation-delay: 0.22s; }
+    .card:nth-child(3) { animation-delay: 0.32s; }
+    .card:nth-child(4) { animation-delay: 0.42s; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, transparent 30%, rgba(255,255,255,0.032) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before { transform: translateX(100%); }
+
+    /* Hover States */
+    .card--filo:hover { border-color: var(--glow-filo-ring); box-shadow: 0 0 0 1px var(--glow-filo-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-filo); transform: translateY(-5px); }
+    .card--soc:hover { border-color: var(--glow-soc-ring); box-shadow: 0 0 0 1px var(--glow-soc-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-soc); transform: translateY(-5px); }
+    .card--arkhe:hover { border-color: var(--glow-arkhe-ring); box-shadow: 0 0 0 1px var(--glow-arkhe-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-arkhe); transform: translateY(-5px); }
+    .card--cyber:hover { border-color: var(--glow-cyber-ring); box-shadow: 0 0 0 1px var(--glow-cyber-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-cyber); transform: translateY(-5px); }
+    .card--moral:hover { border-color: var(--glow-moral-ring); box-shadow: 0 0 0 1px var(--glow-moral-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-moral); transform: translateY(-5px); }
+    .card--politica:hover { border-color: var(--glow-politica-ring); box-shadow: 0 0 0 1px var(--glow-politica-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-politica); transform: translateY(-5px); }
+    .card--arte:hover { border-color: var(--glow-arte-ring); box-shadow: 0 0 0 1px var(--glow-arte-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-arte); transform: translateY(-5px); }
+    .card--metafisica:hover { border-color: var(--glow-metafisica-ring); box-shadow: 0 0 0 1px var(--glow-metafisica-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-metafisica); transform: translateY(-5px); }
+    .card--epistemologia:hover { border-color: var(--glow-epistemologia-ring); box-shadow: 0 0 0 1px var(--glow-epistemologia-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-epistemologia); transform: translateY(-5px); }
+    .card--existencia:hover { border-color: var(--glow-existencia-ring); box-shadow: 0 0 0 1px var(--glow-existencia-ring), 0 20px 60px -12px rgba(0,0,0,0.6), 0 0 40px -8px var(--glow-existencia); transform: translateY(-5px); }
+
+    /* ── Card icon ──────────────────────────────────────────── */
+    .card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0; }
+    .card--filo .card-icon { background: rgba(212,201,154,0.1); border: 1px solid rgba(212,201,154,0.2); }
+    .card--soc .card-icon { background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.2); }
+    .card--arkhe .card-icon { background: rgba(166,124,82,0.1); border: 1px solid rgba(166,124,82,0.2); }
+    .card--cyber .card-icon { background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.2); }
+    .card--moral .card-icon { background: rgba(185,143,214,0.1); border: 1px solid rgba(185,143,214,0.2); }
+    .card--politica .card-icon { background: rgba(79,131,201,0.1); border: 1px solid rgba(79,131,201,0.2); }
+    .card--arte .card-icon { background: rgba(217,103,154,0.1); border: 1px solid rgba(217,103,154,0.2); }
+    .card--metafisica .card-icon { background: rgba(91,79,196,0.1); border: 1px solid rgba(91,79,196,0.2); }
+    .card--epistemologia .card-icon { background: rgba(63,174,138,0.1); border: 1px solid rgba(63,174,138,0.2); }
+    .card--existencia .card-icon { background: rgba(217,123,63,0.1); border: 1px solid rgba(217,123,63,0.2); }
+
+    .card-meta { display: flex; align-items: center; gap: 0.6rem; }
+    .card-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.25em 0.7em; border-radius: 999px; }
+    .card--filo .card-tag { color: var(--accent-filo); background: rgba(212,201,154,0.1); }
+    .card--soc .card-tag { color: var(--accent-soc); background: rgba(192,57,43,0.1); }
+    .card--arkhe .card-tag { color: var(--accent-arkhe); background: rgba(166,124,82,0.1); }
+    .card--cyber .card-tag { color: var(--accent-cyber); background: rgba(0,240,255,0.1); }
+    .card--moral .card-tag { color: var(--accent-moral); background: rgba(185,143,214,0.1); }
+    .card--politica .card-tag { color: var(--accent-politica); background: rgba(79,131,201,0.1); }
+    .card--arte .card-tag { color: var(--accent-arte); background: rgba(217,103,154,0.1); }
+    .card--metafisica .card-tag { color: var(--accent-metafisica); background: rgba(91,79,196,0.1); }
+    .card--epistemologia .card-tag { color: var(--accent-epistemologia); background: rgba(63,174,138,0.1); }
+    .card--existencia .card-tag { color: var(--accent-existencia); background: rgba(217,123,63,0.1); }
+
+    .card-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--text-primary); }
+    .card-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+
+    .card-cta { margin-top: auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.03em; transition: gap var(--transition); }
+    .card--filo .card-cta { color: var(--accent-filo); }
+    .card--soc .card-cta { color: var(--accent-soc); }
+    .card--arkhe .card-cta { color: var(--accent-arkhe); }
+    .card--cyber .card-cta { color: var(--accent-cyber); }
+    .card--moral .card-cta { color: var(--accent-moral); }
+    .card--politica .card-cta { color: var(--accent-politica); }
+    .card--arte .card-cta { color: var(--accent-arte); }
+    .card--metafisica .card-cta { color: var(--accent-metafisica); }
+    .card--epistemologia .card-cta { color: var(--accent-epistemologia); }
+    .card--existencia .card-cta { color: var(--accent-existencia); }
+
+    .card:hover .card-cta { gap: 0.9rem; }
+    .card-cta svg { width: 14px; height: 14px; transition: transform var(--transition); }
+    .card:hover .card-cta svg { transform: translateX(3px); }
+
+    footer { position: relative; z-index: 1; width: 100%; text-align: center; padding: 1.75rem 0 2.5rem; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 0.08em; border-top: 1px solid var(--border); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <main>
+    <header class="header">
+      <span class="header-eyebrow">Portal de Experiencias</span>
+      <h1><strong>Prof. Fabián</strong> Bautista G.</h1>
+      <div class="header-divider"></div>
+      <p>Ludere est voluntarie superare obstacula non necessaria</p>
+    </header>
+
+    <section class="cards" aria-label="Escape Rooms disponibles">
+
+      <a class="card card--cyber" href="https://fabianbauttt.github.io/escape-identidad/" target="_blank">
+        <div class="card-meta">
+          <div class="card-icon">💾</div>
+          <span class="card-tag">Filosofía de la Mente</span>
+        </div>
+        <h2 class="card-title">Protocolo<br>Teseo</h2>
+        <p class="card-desc">Calibra tu esencia y cuestiona tus memorias. ¿Sigues siendo tú después de la transferencia?</p>
+        <div class="card-cta">
+          Iniciar Secuencia
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </a>
+
+      <a class="card card--cyber" href="https://fabianbauttt.github.io/escape-descartes/" target="_blank">
+        <div class="card-meta">
+          <div class="card-icon">🧠</div>
+          <span class="card-tag">Filosofía de la Mente</span>
+        </div>
+        <h2 class="card-title">El Laberinto del<br>Genio Maligno</h2>
+        <p class="card-desc">Un desafío sobre la duda metódica de Descartes. ¿Puedes confiar en tus sentidos?</p>
+        <div class="card-cta">
+          Entrar al desafío
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </a>
+
+      <a class="card card--arkhe" href="https://fabianbauttt.github.io/del-mito-al-logos/" target="_blank">
+        <div class="card-meta">
+          <div class="card-icon">🏛️</div>
+          <span class="card-tag">Filosofía Antigua</span>
+        </div>
+        <h2 class="card-title">Arkhé:<br>En busca del origen</h2>
+        <p class="card-desc">Reconstruye el Templo de la Razón descifrando el enigma de los presocráticos.</p>
+        <div class="card-cta">
+          Explorar el origen
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </a>
+
+      <a class="card card--soc" href="https://fabianbauttt.github.io/escape-guerra-fria/" target="_blank">
+        <div class="card-meta">
+          <div class="card-icon">📡</div>
+          <span class="card-tag">C. Sociales</span>
+        </div>
+        <h2 class="card-title">Operación<br>Teléfono Rojo</h2>
+        <p class="card-desc">Investigación táctica sobre la Guerra Fría. El mundo te necesita para evitar el caos.</p>
+        <div class="card-cta">
+          Aceptar misión
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </a>
+
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 — Educación e Innovación</span>
+  </footer>
+
+</body>
+</html>
